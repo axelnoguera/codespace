@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  app:
+    image: php:8.2-apache
+    volumes:
+      - ..:/workspace
+    ports:
+      - "8000:80"
+    command: >
+      bash -c "docker-php-ext-install mysqli pdo pdo_mysql && apache2-foreground"
+
+  db:
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: testdb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
